@@ -107,20 +107,21 @@ You can list the categories:
 
 * Find out your API key
   * Go to (https://ifttt.com/maker)
-  * Click on the *Settings" button
+  * Click on the *Settings* button
   * You'll see a link in the form `https://maker.ifttt.com/use/<api_key>`
   * Copy the api key in the yaml configuration file
 * Create a new applet to register incomes
   * Select Maker trigger and an event name (for instance: "incomes")
-  * Select Google Drive action, *Add row to a spreasheet".
+  * Select Google Drive action, *Add row to a spreasheet*.
   * Formatted row:
   `=DATEVALUE(SUBSTITUTE("{{OccurredAt}}"," at ", " ")) ||| {{Value1}} ||| ||| {{Value2}} ||| {{Value3}}`
 * Create a new applet to register expensed
   * Select Maker trigger and an event name (for instance: "incomes")
-  * Select Google Drive action, *Add row to a spreasheet". Select the same spreadsheet.
+  * Select Google Drive action, *Add row to a spreasheet*. Select the same spreadsheet.
   * Formatted row:
   `=DATEVALUE(SUBSTITUTE("{{OccurredAt}}"," at ", " ")) ||| ||| {{Value1}} ||| {{Value2}} ||| {{Value3}}`
 
 ## TODO
 
+* Excel output
 * Dockerfile

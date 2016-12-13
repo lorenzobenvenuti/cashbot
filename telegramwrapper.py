@@ -1,7 +1,14 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, RegexHandler
+from telegram.ext import (
+    Updater,
+    CommandHandler,
+    MessageHandler,
+    Filters,
+    RegexHandler
+)
 import logging
 
 logger = logging.getLogger(__name__)
+
 
 class Command(object):
 
@@ -20,7 +27,8 @@ class Command(object):
 
     @property
     def pass_args(self):
-        return self._pass_args    
+        return self._pass_args
+
 
 class App(object):
 
@@ -35,10 +43,9 @@ class App(object):
             bot = args[0]
             update = args[1]
             if not self._access_checker.is_allowed(update.message.from_user):
-                logger.warn(
-                    'Unauthorized user access {}'
-                        .format(update.message.from_user)
-                )
+                logger.warn('Unauthorized user access {}'.format(
+                    update.message.from_user
+                ))
                 bot.sendMessage(
                     update.message.chat_id,
                     text="You are not allowed to use this bot"
@@ -70,7 +77,7 @@ class App(object):
     def run(self):
         updater = Updater(self._token)
         dispatcher = updater.dispatcher
-        for  command in self._commands:
+        for command in self._commands:
             dispatcher.add_handler(CommandHandler(
                 command.name,
                 self._secure_function(command.function),

@@ -10,4 +10,4 @@ class CategoriesSupplier(object):
         return self._categories
 
     def search(self, key):
-        return [ category for category in self._categories if self._matches(category, key)]
+        return [c for c in self._categories if self._matches(c, key)]

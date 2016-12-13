@@ -3,6 +3,7 @@ import csv
 import os.path
 import datetime
 
+
 class Output(object):
 
     def on_income(self, amount, category, message):
@@ -11,10 +12,12 @@ class Output(object):
     def on_expense(self, amount, category, message):
         pass
 
+
 class Writer (object):
 
     def write_row(self, row):
         pass
+
 
 class CsvWriter(Writer):
 
@@ -26,15 +29,18 @@ class CsvWriter(Writer):
             writer = csv.writer(output_file)
             writer.writerow(row)
 
+
 class ExcelWriter(Writer):
 
     def __init__(self, path):
         self._path = path
 
+
 class TimestampSupplier(object):
 
     def get_timestamp(self):
         pass
+
 
 class NowSupplier(TimestampSupplier):
 
@@ -68,6 +74,7 @@ class WriterOutput(Output):
             category,
             message
         ])
+
 
 class IftttOutput(Output):
 

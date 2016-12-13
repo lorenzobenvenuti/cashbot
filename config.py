@@ -2,6 +2,7 @@ import yaml
 import categories
 import outputs
 
+
 class Config(object):
 
     @property
@@ -36,10 +37,12 @@ class Config(object):
     def categories_supplier(self, value):
         self._categories_supplier = value
 
+
 class ConfigFactory(object):
 
     def get_config(self):
         pass
+
 
 class YamlConfigFactory(ConfigFactory):
 
@@ -52,28 +55,38 @@ class YamlConfigFactory(ConfigFactory):
 
     def _build(self, data):
         config = Config()
-        config.telegram_token = self._get_mandatory_parameter(data, 'telegram_token')
-        config.allowed_users = self._get_mandatory_parameter(data, 'allowed_users')
-        cats = self._get_mandatory_parameter(data, 'categories')
+        config.telegram_token = self._get_or_fail(
+            data,
+            'telegram_token'
+        )
+        config.allowed_users = self._get_or_fail(
+            data,
+            'allowed_users'
+        )
+        cats = self._get_or_fail(data, 'categories')
         config.categories_supplier = categories.CategoriesSupplier(cats)
         config.outputs = []
-        outs = self._get_mandatory_parameter(data, 'outputs')
+        outs = self._get_or_fail(data, 'outputs')
         for output in outs:
-            type = self._get_mandatory_parameter(output, 'type')
+            type = self._get_or_fail(output, 'type')
             if type == 'ifttt':
                 config.outputs.append(outputs.IftttOutput(
-                    self._get_mandatory_parameter(output, 'api_key'),
-                    self._get_mandatory_parameter(output, 'income_event'),
-                    self._get_mandatory_parameter(output, 'expense_event')))
+                    self._get_or_fail(output, 'api_key'),
+                    self._get_or_fail(output, 'income_event'),
+                    self._get_or_fail(output, 'expense_event')))
             if type == 'csv':
-                config.outputs.append(outputs.WriterOutput(outputs.CsvWriter(
-                    self._get_mandatory_parameter(output, 'file')), outputs.NowSupplier()))
+                writer = outputs.CsvWriter(self._get_or_fail(output, 'file'))
+                config.outputs.append(
+                    outputs.WriterOutput(writer, outputs.NowSupplier())
+                )
             if type == 'excel':
-                config.outputs.append(outputs.WriterOutput(outputs.ExcelWriter(
-                    self._get_mandatory_parameter(output, 'file')), outputs.NowSupplier()))
+                writer = outputs.CsvWriter(self._get_or_fail(output, 'file'))
+                config.outputs.append(
+                    outputs.WriterOutput(writer, outputs.NowSupplier())
+                )
         return config
 
-    def _get_mandatory_parameter(self, data, key):
+    def _get_or_fail(self, data, key):
         if not key in data:
             raise Exception("Missing parameter: {}".format(key))
         return data[key]

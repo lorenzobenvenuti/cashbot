@@ -63,7 +63,7 @@ You can list the categories:
 
 ## How to activate a bot
 
-* Start a chat with the [BotFather]https://telegram.me/BotFather)
+* Start a chat with the [BotFather](https://telegram.me/BotFather)
 * Send the `/newbot` command
 * Give a name to your robot: for instance "My Accounting Bot"
 * Choose a username for your robot, like MyAccountingBot (it must end in "bot")
@@ -115,13 +115,26 @@ You can list the categories:
   * Select Google Drive action, *Add row to a spreasheet*.
   * Formatted row:
   `=DATEVALUE(SUBSTITUTE("{{OccurredAt}}"," at ", " ")) ||| {{Value1}} ||| ||| {{Value2}} ||| {{Value3}}`
-* Create a new applet to register expensed
-  * Select Maker trigger and an event name (for instance: "incomes")
+* Create a new applet to register expenses
+  * Select Maker trigger and an event name (for instance: "expenses")
   * Select Google Drive action, *Add row to a spreasheet*. Select the same spreadsheet.
   * Formatted row:
   `=DATEVALUE(SUBSTITUTE("{{OccurredAt}}"," at ", " ")) ||| ||| {{Value1}} ||| {{Value2}} ||| {{Value3}}`
 
+## Dockerfile
+
+A `Dockerfile` for ARM architecture is included. To build the image `cd` to the project directory and run:
+
+```
+$ docker build -t cashbot -f Dockerfile.rpi .
+```
+
+To run the container:
+
+```
+$ docker run -d -v /path/to/config.yml:/config/config.yml --restart=always cashbot
+```
+
 ## TODO
 
 * Excel output
-* Dockerfile

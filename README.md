@@ -135,6 +135,8 @@ To run the container:
 $ docker run -d -v /path/to/config.yml:/config/config.yml --restart=always cashbot
 ```
 
+A pre-built image is availalble on [Docker hub](https://hub.docker.com/r/lorenzobenvenuti/cashbot/) 
+
 ## TODO
 
 * Excel output
